@@ -11,7 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 // Build the Docker image from the Dockerfile in your repository
-                sh 'sudo docker build -t abhishekps/node-todo-test:latest .'
+                sh 'docker build -t abhishekps/node-todo-test:latest .'
             }
         }
 
@@ -19,7 +19,7 @@ pipeline {
             steps{
                 withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
         	     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                 sh 'sudo docker push abhishekps/node-todo-test:latest'
+                 sh 'docker push abhishekps/node-todo-test:latest'
                 }
             }
         }
