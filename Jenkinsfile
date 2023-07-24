@@ -15,17 +15,22 @@ pipeline {
             }
         }
 
-        stage('Push'){
-            steps{
-                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'dockerHubPass', usernameVariable: 'dockerHubUser')]) {
-        	    // sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                 sh "echo $dockerHubPass | docker login -u $dockerHubUser --password-stdin"
-                 sh 'docker push abhishekps/node-todo-test:latest'
-
+    stages {
+        stage('Login to Docker Hub') {
+            steps {
+                // Securely handle Docker Hub credentials
+                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKER_HUB_PASS', usernameVariable: 'DOCKER_HUB_USER')]) {
+                    sh 'docker login -u $DOCKER_HUB_USER --password-stdin'
                 }
             }
         }
 
+        stage('Push') {
+            steps {
+                // Push the Docker image to Docker Hub
+                sh 'docker push abhishekps/node-todo-test:latest'
+            }
+        }
         stage('Deploy with Docker Compose') {
             steps {
                 // Install Docker on the remote server
