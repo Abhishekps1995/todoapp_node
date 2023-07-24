@@ -15,7 +15,7 @@ pipeline {
             }
         }
 
-        stages {
+        stage{
         stage('Login to Docker Hub') {
             steps {
                 // Securely handle Docker Hub credentials
