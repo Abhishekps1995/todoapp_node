@@ -18,6 +18,7 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 // Securely handle Docker Hub credentials
+                withDockerRegistry(credentialsId: 'docker') {
                 withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKER_HUB_PASS', usernameVariable: 'DOCKER_HUB_USER')]) {
                     sh 'docker login -u $DOCKER_HUB_USER --password-stdin'
                 }
