@@ -16,12 +16,15 @@ pipeline {
         }
 
         stage('Login to Docker Hub') {
+            environment {
+                DOCKER_REGISTRY = 'https://index.docker.io/v1/' // URL for Docker Hub registry
+            }
             steps {
                 // Securely handle Docker Hub credentials
-                withDockerRegistry(credentialsId: 'docker') {
-                }
-                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKER_HUB_PASS', usernameVariable: 'DOCKER_HUB_USER')]) {
-                    sh 'docker login -u $DOCKER_HUB_USER --password-stdin'
+                withDockerRegistry(credentialsId: 'docker', url: DOCKER_REGISTRY) {
+                    withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKER_HUB_PASS', usernameVariable: 'DOCKER_HUB_USER')]) {
+                        sh 'docker login -u $DOCKER_HUB_USER --password-stdin'
+                    }
                 }
             }
         }
