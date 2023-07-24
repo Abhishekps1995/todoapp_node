@@ -15,26 +15,15 @@ pipeline {
             }
         }
 
-        stage('Login to Docker Hub') {
-            environment {
-                DOCKER_REGISTRY = 'https://hub.docker.com/' // URL for Docker Hub registry
-            }
-            steps {
-                // Securely handle Docker Hub credentials
-                withDockerRegistry(credentialsId: 'docker', url: DOCKER_REGISTRY) {
-                    withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKER_HUB_PASS', usernameVariable: 'DOCKER_HUB_USER')]) {
-                        sh 'docker login -u $DOCKER_HUB_USER --password-stdin'
-                    }
+           stage('Push'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+        	     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                 sh 'docker push abhishekps/node-todo-test:latest'
                 }
             }
         }
 
-        stage('Push') {
-            steps {
-                // Push the Docker image to Docker Hub
-                sh 'docker push abhishekps/node-todo-test:latest'
-            }
-        }
         stage('Deploy with Docker Compose') {
             steps {
                 // Install Docker on the remote server
