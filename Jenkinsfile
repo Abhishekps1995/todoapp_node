@@ -17,8 +17,8 @@ pipeline {
 
         stage('Push'){
             steps{
-                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'docker', usernameVariable: 'docker')]) {
-        	     sh "docker login -u ${env.docker} -p ${env.docker}"
+                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'dockerHubPass', usernameVariable: 'dockerHubUser')]) {
+        	     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
                  sh 'docker push abhishekps/node-todo-test:latest'
                 }
             }
