@@ -17,7 +17,7 @@ pipeline {
 
         stage('Login to Docker Hub') {
             environment {
-                DOCKER_REGISTRY = 'https://index.docker.io/v1/' // URL for Docker Hub registry
+                DOCKER_REGISTRY = 'https://hub.docker.com/' // URL for Docker Hub registry
             }
             steps {
                 // Securely handle Docker Hub credentials
