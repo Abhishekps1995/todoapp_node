@@ -33,7 +33,7 @@ pipeline {
                 sh 'sudo ssh -o StrictHostKeyChecking=no -i /home/ubuntu/ec2_micro_keypair.pem ubuntu@13.233.195.166 "sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io"'
 
                 // Copy the Docker Compose YAML to the remote server using SCP
-                sh "sudo scp -o StrictHostKeyChecking=no -i /home/ubuntu/ec2_micro_keypair.pem /home/ubuntu/todoapp_node/docker-compose.yml ubuntu@13.233.195.166:/home/ubuntu/docker-compose.yml"
+                sh "sudo scp -o StrictHostKeyChecking=no -i /home/ubuntu/ec2_micro_keypair.pem /home/ubuntu/todoapp_node/docker-compose.yaml ubuntu@13.233.195.166:/home/ubuntu/docker-compose.yaml"
 
                 // SSH into the remote server and deploy the application with Docker Compose
                 sh "sudo ssh -o StrictHostKeyChecking=no -i /home/ubuntu/ec2_micro_keypair.pem ubuntu@13.233.195.166 'sudo systemctl start docker'"
