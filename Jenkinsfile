@@ -39,7 +39,7 @@ pipeline {
                 sh "sudo ssh -o StrictHostKeyChecking=no -i /home/ubuntu/ec2_micro_keypair.pem ubuntu@13.233.195.166 'sudo systemctl start docker'"
                 sh "sudo ssh -o StrictHostKeyChecking=no -i /home/ubuntu/ec2_micro_keypair.pem ubuntu@13.233.195.166 'sudo systemctl enable docker'"
                 sh "sudo ssh -o StrictHostKeyChecking=no -i /home/ubuntu/ec2_micro_keypair.pem ubuntu@13.233.195.166 'docker --version'"
-                sh "sudo ssh -o StrictHostKeyChecking=no -i /home/ubuntu/ec2_micro_keypair.pem ubuntu@13.233.195.166 'sudo docker-compose -f /home/ubuntu/docker-compose.yml down && docker-compose -f /home/ubuntu/docker-compose.yml up -d'"
+                sh "sudo ssh -o StrictHostKeyChecking=no -i /home/ubuntu/ec2_micro_keypair.pem ubuntu@13.233.195.166 'sudo docker-compose -f /home/ubuntu/docker-compose.yaml down && docker-compose -f /home/ubuntu/docker-compose.yaml up -d'"
             }
         }
     }
